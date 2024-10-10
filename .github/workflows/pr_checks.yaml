@@ -1,12 +1,6 @@
 name: PR Checks
 
 on:
-  push:
-    branches:
-      - 'feature/**'
-      - main
-    tags:
-      - 'v*.*.*'
   pull_request:
     branches:
       - main
