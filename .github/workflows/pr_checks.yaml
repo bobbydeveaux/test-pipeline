@@ -1,0 +1,23 @@
+name: PR Checks
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - main
+    tags:
+      - 'v*.*.*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run PR Checks
+        run: |
+          echo "Running checks for Pull Request"
+          echo "PR: ${{ github.event.pull_request.number }}"

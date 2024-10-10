@@ -1,0 +1,17 @@
+name: Deploy to Sandbox
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+
+jobs:
+  sandbox-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy to Sandbox
+        run: |
+          echo "Deploying to Sandbox environment"
+          echo "Branch: ${{ github.ref }}"

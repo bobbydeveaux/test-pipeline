@@ -1,0 +1,17 @@
+name: Deploy to Preprod
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  preprod-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy to Preprod
+        run: |
+          echo "Deploying to Preprod environment"
+          echo "Branch: ${{ github.ref }}"
