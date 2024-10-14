@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'feature/**'
+      - 'ft/**'
 
 jobs:
   sandbox-deploy:
