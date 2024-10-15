@@ -30,4 +30,4 @@ jobs:
       - name: Run Ansible Lint
         run: |
           echo "Running Ansible Lint"
-          ansible-lint
+          ansible-lint 
