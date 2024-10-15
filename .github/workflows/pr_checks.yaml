@@ -15,7 +15,6 @@ jobs:
         run: |
           echo "Running checks for Pull Request"
           echo "PR: ${{ github.event.pull_request.number }}"
-      
       - name: Check and Install Ansible
         run: |
           if ! command -v ansible &> /dev/null
@@ -26,7 +25,6 @@ jobs:
           else
               echo "Ansible is already installed"
           fi
-          
       - name: Check and Install Ansible Lint
         run: |
           if ! command -v ansible-lint &> /dev/null
@@ -40,4 +38,4 @@ jobs:
       - name: Run Ansible Lint
         run: |
           echo "Running Ansible Lint"
-          ansible-lint 
+          ansible-lint
