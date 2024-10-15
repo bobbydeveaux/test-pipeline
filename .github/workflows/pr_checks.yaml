@@ -26,6 +26,16 @@ jobs:
           else
               echo "Ansible is already installed"
           fi
+          
+      - name: Check and Install Ansible Lint
+        run: |
+          if ! command -v ansible-lint &> /dev/null
+          then
+              echo "Ansible Lint not found. Installing Ansible Lint..."
+              pip install ansible-lint
+          else
+              echo "Ansible Lint is already installed"
+          fi
 
       - name: Run Ansible Lint
         run: |
