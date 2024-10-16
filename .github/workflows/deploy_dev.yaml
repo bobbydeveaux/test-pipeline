@@ -4,8 +4,17 @@ on:
   push:
     branches:
       - 'feature/**'
+      - 'ft/**'
 
 jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run PR Checks
+        uses: ./.github/workflows/pr_checks.yaml
+      
   sandbox-deploy:
     runs-on: ubuntu-latest
     steps:
