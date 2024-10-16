@@ -15,6 +15,25 @@ jobs:
         run: |
           echo "Running checks for Pull Request"
           echo "PR: ${{ github.event.pull_request.number }}"
+
+      - name: Check and Install Terraform
+        run: |
+          if ! command -v terraform &> /dev/null
+          then
+              echo "Terraform not found. Installing Terraform..."
+              sudo apt update
+              sudo apt install -y terraform
+          else
+              echo "Terraform is already installed"
+          fi
+      - uses: terraform-linters/setup-tflint@v4
+        name: Setup TFLint
+        with:
+          tflint_version: v0.52.0
+
+      - name: Show version
+        run: tflint --version
+
       - name: Check and Install Ansible
         run: |
           if ! command -v ansible &> /dev/null
@@ -39,3 +58,4 @@ jobs:
         run: |
           echo "Running Ansible Lint"
           ansible-lint
+
