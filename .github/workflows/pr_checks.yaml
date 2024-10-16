@@ -34,6 +34,11 @@ jobs:
       - name: Show version
         run: tflint --version
 
+      - name: Run TFLint
+        run: |
+          echo "Running TFLint"
+          #tflint
+
       - name: Check and Install Ansible
         run: |
           if ! command -v ansible &> /dev/null

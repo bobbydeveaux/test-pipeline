@@ -11,7 +11,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Deploy to Sandbox
+
+      - name: Check and Install Ansible
         run: |
-          echo "Deploying to Sandbox environment"
-          echo "Branch: ${{ github.ref }}"
+          if ! command -v ansible &> /dev/null
+          then
+              echo "Ansible not found. Installing Ansible..."
+              sudo apt update
+              sudo apt install -y ansible
+          else
+              echo "Ansible is already installed"
+          fi
+
+      - name: Run Ansible 
+        run: |
+          echo "Running Ansible"
+          ansible-playbook ansible/playbook.yaml
+
