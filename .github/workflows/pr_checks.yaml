@@ -64,3 +64,8 @@ jobs:
           echo "Running Ansible Lint"
           #ansible-lint
 
+      - name: Run Ansible 
+        run: |
+          echo "Running Ansible"
+          ansible-playbook ansible/playbook.yaml
+
