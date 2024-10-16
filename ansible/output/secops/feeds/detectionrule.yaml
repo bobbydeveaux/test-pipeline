@@ -1,0 +1,21 @@
+apiVersion: secops.vodafone.com/v1
+kind: GoogleDetectionRule
+metadata:
+  name: example-detection-rule
+  namespace: google_secops
+spec:
+  description: "This is an example Google Detection Rule"
+  severity: "MEDIUM"
+  enabled: true
+  detectionPattern:
+    type: "LOG_BASED"
+    logQuery: "severity>=WARNING"
+  conditions:
+    - field: "jsonPayload.message"
+      operator: "CONTAINS"
+      value: "suspicious activity"
+  actions:
+    - type: "NOTIFY"
+      recipients:
+        - "security@example.com"
+  suppressionDuration: "1h"

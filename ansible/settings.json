@@ -1,0 +1,15 @@
+
+{
+    "name": "SMA-SecopsTooling",
+    "repo": "git@github.com:bobbydeveaux/test-argo.git",
+    "repo_path": "manifests",
+    "publish": true,
+    "modules": {
+        "secops": {
+            "name": "Secops"
+        },
+        "otel": {
+            "name": "Otel"
+        }
+    }
+}
