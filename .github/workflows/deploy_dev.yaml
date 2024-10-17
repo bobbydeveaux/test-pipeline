@@ -19,3 +19,7 @@ jobs:
         run: |
           echo "Deploying to Sandbox environment"
           echo "Branch: ${{ github.ref }}"
+      - name: Run Ansible 
+        run: |
+          echo "Running Ansible"
+          ansible-playbook ansible/playbook.yaml

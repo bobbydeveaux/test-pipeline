@@ -6,6 +6,8 @@ on:
       - main
 
 jobs:
+  pr-checks:
+    uses: ./.github/workflows/pr_checks.yaml
   preprod-deploy:
     runs-on: ubuntu-latest
     steps:
