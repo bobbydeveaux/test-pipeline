@@ -1,7 +1,7 @@
 
 {
     "name": "SMA-SecopsTooling",
-    "repo": "git@github.com:bobbydeveaux/test-argo.git",
+    "repo": "https://github.com/bobbydeveaux/test-argo.git",
     "repo_path": "manifests",
     "publish": true,
     "modules": {
