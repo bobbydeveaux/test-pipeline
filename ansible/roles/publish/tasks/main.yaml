@@ -67,13 +67,22 @@
   ansible.builtin.command: "git add ."
   args:
     chdir: /tmp/repo
-    
+
+- name: Check for changes
+  ansible.builtin.command: "git status --porcelain"
+  args:
+    chdir: /tmp/repo
+  register: git_status
+  changed_when: false
+
 - name: Commit changes
   ansible.builtin.command: "git commit -am 'Ansible Publish Generator Commit'"
   args:
     chdir: /tmp/repo
+  when: git_status.stdout != ""
 
 - name: Push changes to the repository
   ansible.builtin.command: "git push -u origin main"
   args:
     chdir: /tmp/repo
+  when: git_status.stdout != ""
