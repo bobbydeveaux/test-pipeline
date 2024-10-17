@@ -19,6 +19,12 @@ jobs:
         run: |
           echo "Deploying to Sandbox environment"
           echo "Branch: ${{ github.ref }}"
+
+      - name: For Ansible Permissions
+        run: |
+          sudo apt update
+          sudo apt-get install acl
+
       - name: Run Ansible 
         run: |
           echo "Running Ansible"
