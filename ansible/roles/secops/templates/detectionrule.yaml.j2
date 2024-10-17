@@ -12,7 +12,7 @@ spec:
     logQuery: "{{ log_query | default('severity>=WARNING') }}"
   conditions:
     - field: "{{ condition_field | default('jsonPayload.message') }}"
-      operator: "{{ condition_operator | default('CONTAINS') }}"
+      operator: "{{ condition_operator | default('CONTAINZZZ') }}"
       value: "{{ condition_value | default('suspicious activity') }}"
   actions:
     - type: "{{ action_type | default('NOTIFY') }}"
