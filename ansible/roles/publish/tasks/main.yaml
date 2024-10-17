@@ -13,6 +13,10 @@
 - name: Configure Git to use the token for authentication
   ansible.builtin.command: git config --global credential.helper '!f() { echo "username=x-access-token"; echo "password={{ lookup('env', 'API_TOKEN_GITHUB') }}"; }; f'
 
+- name: Configure Git user name and email
+  ansible.builtin.command: |
+    git config --local user.name "Ansible Publish Generator"
+    git config --local user.email "sma@vodafone.com"
 
 - name: Clone the repository
   git:
