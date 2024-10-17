@@ -14,10 +14,10 @@
   ansible.builtin.command: git config --global credential.helper '!f() { echo "username=x-access-token"; echo "password={{ lookup('env', 'API_TOKEN_GITHUB') }}"; }; f'
 
 - name: Configure Git user name
-  ansible.builtin.command: git config --local user.name "Ansible Publish Generator"
+  ansible.builtin.command: git config --global user.name "Ansible Publish Generator"
 
 - name: Configure Git email
-  ansible.builtin.command: git config --local user.email "sma@vodafone.com"
+  ansible.builtin.command: git config --global user.email "sma@vodafone.com"
 
 - name: Clone the repository
   git:
