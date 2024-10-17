@@ -12,7 +12,7 @@ jobs:
       - name: Run PR Checks
         run: |
           echo "Running checks for Pull Request"
-          echo "PR: ${{ github.event.pull_request.number }}"
+          #echo "PR: ${{ github.event.pull_request.number }}"
 
       - name: Check and Install Terraform
         run: |
