@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run PR Checks
-        uses: ./.github/workflows/pr_checks.yaml
+        uses: ./.github/workflows/pr_checks/action.yaml
       
   sandbox-deploy:
     runs-on: ubuntu-latest
