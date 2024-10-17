@@ -1,0 +1,21 @@
+apiVersion: secops.vodafone.com/v1
+kind: GoogleDetectionRule
+metadata:
+  name: {{ rule_name | default('example-detection-rule') }}
+  namespace: google_secops
+spec:
+  description: "{{ description | default('This is an example Google Detection Rule') }}"
+  severity: "{{ severity | default('MEDIUM') }}"
+  enabled: {{ enabled | default(true) }}
+  detectionPattern:
+    type: "{{ detection_type | default('LOG_BASED') }}"
+    logQuery: "{{ log_query | default('severity>=WARNING') }}"
+  conditions:
+    - field: "{{ condition_field | default('jsonPayload.message') }}"
+      operator: "{{ condition_operator | default('CONTAINZZZ') }}"
+      value: "{{ condition_value | default('suspicious activity') }}"
+  actions:
+    - type: "{{ action_type | default('NOTIFY') }}"
+      recipients:
+        - "{{ action_recipient | default('security@example.com') }}"
+  suppressionDuration: "{{ suppression_duration | default('1h') }}"

@@ -1,0 +1,12 @@
+---
+- name: Ensure the output directory exists
+  ansible.builtin.file:
+    path: "output/secops/feeds"
+    state: directory
+    mode: '0755'
+
+- name: Parse detectionrule.yaml.j2 template
+  ansible.builtin.template:
+    src: detectionrule.yaml.j2
+    dest: "output/secops/feeds/detectionrule.yaml"
+    mode: '0644'

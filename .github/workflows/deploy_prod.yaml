@@ -5,6 +5,8 @@ on:
     tags:
       - 'v*.*.*'
 jobs:
+  pr-checks:
+    uses: ./.github/workflows/pr_checks.yaml
   production-deploy:
     runs-on: ubuntu-latest
     steps:

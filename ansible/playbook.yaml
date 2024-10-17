@@ -1,0 +1,21 @@
+---
+- name: Build k8s Manifests
+  hosts: localhost
+  connection: localhost
+  gather_facts: false
+
+  tasks:
+
+    - name: Get settings
+      ansible.legacy.set_fact:
+        settings: "{{ lookup('file', 'settings.json') | from_json }}"
+
+    - name: Run SecOps Playbook
+      ansible.legacy.include_role:
+        name: secops
+      when: settings.modules.secops is defined
+
+    - name: Push to Argo
+      ansible.builtin.include_role:
+        name: publish
+      when: settings.publish is defined and settings.publish == true

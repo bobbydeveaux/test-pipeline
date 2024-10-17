@@ -1,0 +1,88 @@
+---
+# Here we grab everything in the output directory and publish it
+- name: Publish
+  ansible.builtin.debug:
+    msg: "Publishing SMA-SecopsTooling {{ lookup('env', 'API_TOKEN_GITHUB') }}"
+
+- name: Ensure required packages are installed
+  become: yes
+  package:
+    name: git
+    state: present
+
+- name: Configure Git to use the token for authentication
+  ansible.builtin.command: git config --global credential.helper '!f() { echo "username=x-access-token"; echo "password={{ lookup('env', 'API_TOKEN_GITHUB') }}"; }; f'
+
+- name: Configure Git user name
+  ansible.builtin.command: git config --global user.name "Ansible Publish Generator"
+
+- name: Configure Git email
+  ansible.builtin.command: git config --global user.email "sma@vodafone.com"
+
+- name: Clone the repository
+  git:
+    repo: "{{ settings.repo }}"
+    dest: /tmp/repo
+    version: main
+    accept_hostkey: yes
+    force: yes
+
+- name: Find files in output directory
+  find:
+    paths: "output/"
+    recurse: yes
+  register: found_files
+
+- name: Remove existing files in the repository
+  ansible.builtin.file:
+    path: "/tmp/repo/{{ settings.repo_path }}"
+    state: absent
+  ignore_errors: yes  
+
+- name: Ensure the output directory exists for {{ settings.name }}
+  ansible.builtin.file:
+    path: "/tmp/repo/{{ settings.repo_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Ensure destination directories exist
+  ansible.builtin.file:
+    path: "/tmp/repo/{{ settings.repo_path }}/{{ file_item.path | ansible.builtin.regex_replace('^output/{}/'.format(settings.name), '') | dirname }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ found_files.files }}"
+  loop_control:
+    loop_var: file_item
+
+- name: Copy files destination directories exist
+  ansible.builtin.copy:
+    src: "{{ file_item.path }}"
+    dest: "/tmp/repo/{{ settings.repo_path }}/{{ file_item.path | ansible.builtin.regex_replace('^output/{}/'.format(settings.name), '') }}"
+    force: true
+  loop: "{{ found_files.files }}"
+  loop_control:
+    loop_var: file_item
+
+- name: Add files to the repository
+  ansible.builtin.command: "git add ."
+  args:
+    chdir: /tmp/repo
+
+- name: Check for changes
+  ansible.builtin.command: "git status --porcelain"
+  args:
+    chdir: /tmp/repo
+  register: git_status
+  changed_when: false
+
+- name: Commit changes
+  ansible.builtin.command: "git commit -am 'Ansible Publish Generator Commit'"
+  args:
+    chdir: /tmp/repo
+  when: git_status.stdout != ""
+
+- name: Push changes to the repository
+  ansible.builtin.command: "git push -u origin main"
+  args:
+    chdir: /tmp/repo
+  when: git_status.stdout != ""

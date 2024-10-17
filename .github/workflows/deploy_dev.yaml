@@ -4,8 +4,12 @@ on:
   push:
     branches:
       - 'feature/**'
+      - 'ft/**'
 
 jobs:
+  pr-checks:
+    uses: ./.github/workflows/pr_checks.yaml
+      
   sandbox-deploy:
     runs-on: ubuntu-latest
     steps:
@@ -15,3 +19,13 @@ jobs:
         run: |
           echo "Deploying to Sandbox environment"
           echo "Branch: ${{ github.ref }}"
+
+      - name: Set up environment
+        run: echo "API_TOKEN_GITHUB=${{ secrets.API_TOKEN_GITHUB }}" >> $GITHUB_ENV
+
+      - name: Run Ansible 
+        run: |
+          echo "Running Ansible"
+          ansible-playbook ansible/playbook.yaml
+        env: 
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
