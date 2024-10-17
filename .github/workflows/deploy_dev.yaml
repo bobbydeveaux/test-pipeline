@@ -20,12 +20,12 @@ jobs:
           echo "Deploying to Sandbox environment"
           echo "Branch: ${{ github.ref }}"
 
-      - name: For Ansible Permissions
-        run: |
-          sudo apt update
-          sudo apt-get install acl
+      - name: Set up environment
+        run: echo "API_TOKEN_GITHUB=${{ secrets.API_TOKEN_GITHUB }}" >> $GITHUB_ENV
 
       - name: Run Ansible 
         run: |
           echo "Running Ansible"
           ansible-playbook ansible/playbook.yaml
+        env: 
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
